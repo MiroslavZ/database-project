@@ -1,0 +1,2 @@
+class ChangeAtributeException(Exception):
+    pass
