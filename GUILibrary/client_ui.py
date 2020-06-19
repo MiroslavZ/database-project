@@ -2,8 +2,6 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtCore import Qt, QDate
 import sys
 
-from gui_main import LoginWindow
-
 
 class ClientWindow(QWidget):
     def __init__(self):
@@ -67,7 +65,7 @@ class ClientWindow(QWidget):
         self.new_window= BuyMedWindow()
 
     def exit_from_acc(self):
-        self.new_window = LoginWindow()
+        #self.new_window = LoginWindow()
         self.close()
 
     def center(self):
