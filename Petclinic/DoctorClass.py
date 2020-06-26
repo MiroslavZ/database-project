@@ -24,7 +24,7 @@ class DoctorClass:
         data_s = data.split('**')
         is_chief = data_s[6] == "True"
         doc = DoctorClass(int(data_s[0]), data_s[1], data_s[2], data_s[3],
-                          data_s[4], data_s[5].__str__(), is_chief)
+                          data_s[4], data_s[5], is_chief)
         return doc
 
     def getId(self):

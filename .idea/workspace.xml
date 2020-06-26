@@ -2,11 +2,26 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1b08f352-e1ba-4a38-982c-776eef7a1f08" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/GUILibrary/HelperMethods.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/GUI/client_gui.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/GUI/doctor_gui.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/MyGUI/main.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/MyGUI/untitled.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data_base.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gui_main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client_ui.py" beforeDir="false" afterPath="$PROJECT_DIR$/GUILibrary/client_ui.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/doctor_ui.py" beforeDir="false" afterPath="$PROJECT_DIR$/GUILibrary/doctor_ui.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gui_main.py" beforeDir="false" afterPath="$PROJECT_DIR$/GUILibrary/gui_main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GUILibrary/HelperMethods.py" beforeDir="false" afterPath="$PROJECT_DIR$/GUI/HelperMethods.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GUILibrary/client_ui.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GUILibrary/doctor_ui.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GUILibrary/gui_main.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ORM/models2.py" beforeDir="false" afterPath="$PROJECT_DIR$/ORM/models2.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Petclinic/AppointmentClass.py" beforeDir="false" afterPath="$PROJECT_DIR$/Petclinic/AppointmentClass.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Petclinic/ClientClass.py" beforeDir="false" afterPath="$PROJECT_DIR$/Petclinic/ClientClass.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Petclinic/DoctorClass.py" beforeDir="false" afterPath="$PROJECT_DIR$/Petclinic/DoctorClass.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client.py" beforeDir="false" afterPath="$PROJECT_DIR$/client.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_sandbox.py" beforeDir="false" afterPath="$PROJECT_DIR$/my_sandbox.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/petclinic.db" beforeDir="false" afterPath="$PROJECT_DIR$/petclinic.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server.py" beforeDir="false" afterPath="$PROJECT_DIR$/server.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/unittests.py" beforeDir="false" afterPath="$PROJECT_DIR$/unittests.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -29,14 +44,16 @@
     <ConfirmationsSetting value="2" id="Add" />
   </component>
   <component name="PropertiesComponent">
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../films-master" />
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/GUI" />
     <property name="settings.editor.selected.configurable" value="preferences.editor" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\Miroslav\PycharmProjects\veterinary_clinic_for_cats.2\GUILibrary" />
+      <recent name="C:\Users\zhuck\PycharmProjects\veterinary_clinic_for_cats.2\MyGUI" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\zhuck\PycharmProjects\veterinary_clinic_for_cats.2\GUI" />
       <recent name="C:\Users\zhuck\PycharmProjects\veterinary_clinic_for_cats.2" />
     </key>
   </component>
@@ -52,70 +69,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.gui_main (1)">
-    <configuration name="client_ui" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="veterinary_clinic_for_cats.2" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/GUILibrary" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/GUILibrary/client_ui.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="doctor_ui" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="veterinary_clinic_for_cats.2" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/GUILibrary" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/GUILibrary/doctor_ui.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="gui_main (1)" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="veterinary_clinic_for_cats.2" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/GUILibrary" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/GUILibrary/gui_main.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
+  <component name="RunManager" selected="Python.gui_main">
     <configuration name="gui_main" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="veterinary_clinic_for_cats.2" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -128,7 +82,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="C:\Users\Miroslav\PycharmProjects\veterinary_clinic_for_cats.2\GUILibrary\gui_main.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/gui_main.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -137,7 +91,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="gui_main(pyqt)" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="server" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="veterinary_clinic_for_cats.2" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -149,7 +103,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="C:\Users\Miroslav\PycharmProjects\veterinary_clinic_for_cats.2\GUILibrary\gui_main.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/server.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -158,13 +112,55 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="Unittests for unittests.TestServerClient.test_change_client" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
+      <module name="veterinary_clinic_for_cats.2" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;unittests.TestServerClient.test_change_client&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Unittests for unittests.TestServerClient.test_get_client_by_email" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
+      <module name="veterinary_clinic_for_cats.2" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;unittests.TestServerClient.test_get_client_by_email&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Unittests for unittests.TestServerClient.test_get_doctor_by_email" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
+      <module name="veterinary_clinic_for_cats.2" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;unittests.TestServerClient.test_get_doctor_by_email&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.gui_main (1)" />
-        <item itemvalue="Python.doctor_ui" />
-        <item itemvalue="Python.client_ui" />
         <item itemvalue="Python.gui_main" />
-        <item itemvalue="Python.gui_main(pyqt)" />
+        <item itemvalue="Python.server" />
+        <item itemvalue="Python tests.Unittests for unittests.TestServerClient.test_change_client" />
+        <item itemvalue="Python tests.Unittests for unittests.TestServerClient.test_get_doctor_by_email" />
+        <item itemvalue="Python tests.Unittests for unittests.TestServerClient.test_get_client_by_email" />
       </list>
     </recent_temporary>
   </component>
@@ -179,14 +175,6 @@
       <option name="presentableId" value="Default" />
       <updated>1590920687832</updated>
     </task>
-    <task id="LOCAL-00001" summary="added new window">
-      <created>1591990142660</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1591990142660</updated>
-    </task>
-    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -203,16 +191,45 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="added new window" />
-    <option name="LAST_COMMIT_MESSAGE" value="added new window" />
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/ORM/models.py</url>
+          <line>68</line>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/data_base.py</url>
+          <line>152</line>
+          <option name="timeStamp" value="50" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/unittests.py</url>
+          <line>200</line>
+          <option name="timeStamp" value="61" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/server.py</url>
+          <line>129</line>
+          <option name="timeStamp" value="62" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/data_base.py</url>
+          <line>41</line>
+          <option name="timeStamp" value="71" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/unittests.py</url>
+          <line>60</line>
+          <option name="timeStamp" value="73" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/my_sandbox.py</url>
-          <line>10</line>
-          <option name="timeStamp" value="8" />
+          <line>23</line>
+          <option name="timeStamp" value="79" />
         </line-breakpoint>
       </breakpoints>
       <default-breakpoints>
@@ -231,11 +248,17 @@
         <watch expression="dict_doctors[1]" language="Python" />
       </configuration>
       <configuration name="PythonConfigurationType">
-        <watch expression="dbhandle" language="Python" />
-        <watch expression="session" language="Python" />
-        <watch expression="doctors[0]" language="Python" />
-        <watch expression="doctors[&quot;0&quot;]" language="Python" />
-        <watch expression="doctors[&quot;1&quot;]" language="Python" />
+        <watch expression="self.client" language="Python" />
+        <watch expression="password.__hash__().__str__()" language="Python" />
+        <watch expression="session.get(server_address).text" language="Python" />
+        <watch expression="self.doctor" language="Python" />
+        <watch expression="self.clients_list.currentText()" language="Python" />
+        <watch expression="self.doctors_list.currentText()" language="Python" />
+        <watch expression="self.doctor" language="Python" />
+        <watch expression="self.actual_name_title.text()" language="Python" />
+        <watch expression="self.new_surname.text()" language="Python" />
+        <watch expression="self.doctor.getId()" language="Python" />
+        <watch expression="client.get_all_clients()" language="Python" />
       </configuration>
     </watches-manager>
   </component>

@@ -72,6 +72,7 @@ class ClientClass:
         return self.fio == other.fio and \
                self.email == other.email and \
                self.phone == other.phone and \
+               self.password == other.password and \
                self.cat_id == other.cat_id
 
     def __str__(self):

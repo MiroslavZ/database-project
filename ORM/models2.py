@@ -35,9 +35,9 @@ def CreateTableMedications():
 def CreateTableAppointments():
     cursor.execute("""CREATE TABLE appointments
                            (id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, 
-                           time DATETIME, doctor INT, cat INT, state text, cat_weight DOUBLE, need_med INT,
-                           FOREIGN KEY (doctor) REFERENCES doctor(id),
-                           FOREIGN KEY (cat) REFERENCES cat(id),
+                           time text, doctor_id INT, cat_id INT, state text, need_med INT,
+                           FOREIGN KEY (doctor_id) REFERENCES doctor(id),
+                           FOREIGN KEY (cat_id) REFERENCES cat(id),
                            FOREIGN KEY (need_med) REFERENCES Medication(id))
                        """)
 

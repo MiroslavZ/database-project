@@ -1,5 +1,5 @@
 import unittest
-import main
+import data_base
 import client
 from Petclinic.CatClass import CatClass
 from Petclinic.ClientClass import ClientClass
@@ -10,7 +10,7 @@ from Petclinic.MedicationClass import MedicationClass
 class TestServerClient(unittest.TestCase):
 
     def setUp(self) -> None:
-        main.Database.recreate_tables()
+        data_base.Database.recreate_tables()
 
     def test_AddOneDoctor(self):
         client.add_doctor('fio', 'email', 'phone', 'password', 'work_time', False)
@@ -49,6 +49,13 @@ class TestServerClient(unittest.TestCase):
         self.assertEqual(expect, dict_cats[1])
         expect = CatClass(0, 'fio2', 5, 4, 'cat_breed2')
         self.assertEqual(expect, dict_cats[2])
+
+    def test_AddOne2(self):
+        client.add_cat('Мурзик', 2, 3, 'cat_breed')
+        dict_cats = client.get_all_cats()
+        self.assertEqual(1, dict_cats.__len__())
+        expect = CatClass(1, 'Мурзик', 2, 3, 'cat_breed')
+        self.assertEqual(expect.__str__(), dict_cats[1].__str__())
 
     def test_AddOneMedication(self):
         client.add_medication('title', 'description', 1.5)
@@ -169,6 +176,16 @@ class TestServerClient(unittest.TestCase):
         expect = DoctorClass(0, 'fio', 'email', 'phone', 'password', 'work_time', True)
         self.assertEqual(expect, dict_doctors[1])
 
+    def test_ChangeCat(self):
+        client.add_cat('fio', 2, 3, 'cat_breed')
+
+        cats = client.get_all_cats()
+        id_cat = 1
+        client.change_cat(id_cat, 'Mysy', 12, "cat_breed_1")
+        dict_cats = client.get_all_cats()
+        expect = CatClass(0, 'Mysy', 2, 12, 'cat_breed_1')
+        self.assertEqual(expect, dict_cats[1])
+
     def test_GetMyPetsOnOnePet(self):
         client.add_client('fio', 'email', 'phone', 1, 'password')
         client.add_cat('fio', 1, 3, 'cat_breed')
@@ -192,6 +209,42 @@ class TestServerClient(unittest.TestCase):
         expect = CatClass(0, 'fio2', 1, 4, 'cat_breed2')
         self.assertEqual(expect, dict_cats[2])
 
+    def test_is_doctor_with_email(self):
+        client.add_doctor('fio', 'email', 'phone', 'password', 'work_time', False)
+        self.assertTrue(client.is_doctor_with_email('email'))
+
+    def test_is_not_doctor_with_email(self):
+        client.add_doctor('fio', 'email', 'phone', 'password', 'work_time', False)
+        self.assertFalse(client.is_doctor_with_email('email2'))
+
+    def test_is_client_with_email(self):
+        client.add_client('fio', 'email', 'phone', 1, 'password')
+        self.assertTrue(client.is_client_with_email('email'))
+
+    def test_is_not_client_with_email(self):
+        client.add_client('fio', 'email', 'phone', 1, 'password')
+        self.assertFalse(client.is_client_with_email('email2'))
+
+    def test_get_doctor_by_email(self):
+        client.add_doctor('fio', 'email', 'phone', 'password', 'work_time', False)
+        doctor = client.get_doctor_by_email('email')
+        expect = DoctorClass(0, 'fio', 'email', 'phone', 'password', 'work_time', False)
+        self.assertEqual(expect, DoctorClass.decrypt(doctor))
+
+    def test_get_client_by_email(self):
+        client.add_client('fio', 'email', 'phone', 1, 'password')
+        result = client.get_client_by_email('email')
+        expect = ClientClass(0, 'fio', 'email', 'phone', 1, 'password')
+        self.assertEqual(expect, ClientClass.decrypt(result))
+
+    def test_change_client(self):
+        db = data_base.Database()
+        db.add_client('surname name otchestvo', 'email5@test.com', 'phone_new', 5, 'new_password')
+        clients = db.get_all_clients()
+        db.change_client(1, 'GGG GGG GGG', 'email5@test.com', 'phone_new', 'new_password')
+        clients = db.get_all_clients()
+        expect = ClientClass(1, 'surname name otchestvo', 'email5@test.com', 'phone_new', 2, 'new_password')
+        self.assertEqual(expect, clients[1])
 
 if __name__ == '__main__':
     unittest.main()
