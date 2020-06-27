@@ -12,14 +12,9 @@ class Database:
     _cursor = None
 
     def __init__(self):
-        # Пока не будем пересоздовать таблицы но потом обезательно надо пересоздать
-        # Database.recreate_tables()
-
         self._db = ORM.models2.conn
         self._cursor = ORM.models2.cursor
 
-    # Сначала один раз надо создать все таблицы
-    # Первый раз возникнит ошибка так как таблицы еще не создовались
     @staticmethod
     def recreate_tables():
         ORM.models2.drop_all_tables()

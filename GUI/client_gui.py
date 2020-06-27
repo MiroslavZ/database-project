@@ -26,7 +26,6 @@ class ClientWindow(QWidget):
         self.make_appointment = QPushButton("ЗАПИСАТЬСЯ НА ОСМОТР")
         self.go_to_my_cats = QPushButton("МОИ ПИТОМЦЫ")
         self.buy_medication = QPushButton("КУПИТЬ СРЕДСТВА")
-        # self.show_medications = QPushButton("МОИ ПОКУПКИ")
         self.make_appointment.clicked.connect(self.go_to_appointment_window)
         self.go_to_my_cats.clicked.connect(self.go_to_my_pets_window)
         self.buy_medication.clicked.connect(self.go_to_buy_med_window)
@@ -36,7 +35,6 @@ class ClientWindow(QWidget):
         v_box_left.addWidget(self.make_appointment)
         v_box_left.addWidget(self.go_to_my_cats)
         v_box_left.addWidget(self.buy_medication)
-        # v_box_left.addWidget(self.show_medications)
         v_box_left.addStretch()
 
         v_box_center = QVBoxLayout()
@@ -66,11 +64,9 @@ class ClientWindow(QWidget):
 
     def go_to_appointment_window(self):
         self.new_window = AppointmentWindow(self.this_client)
-        # self.close()
 
     def go_to_my_pets_window(self):
         self.new_window = MyPetsWindow(self.this_client)
-        # self.close()
 
     def go_to_buy_med_window(self):
         self.new_window = BuyMedWindow(self.this_client)
@@ -354,16 +350,10 @@ class MyPetsWindow(QWidget):
             self.button_pressed = True
             self.add_new_pet()
 
-    # def get_cats_list(self):
-    #     # cats_list должен заполняться котами этого пользователя из БД
-    #     self.cats_list.addItems(["Dysia", "Barsik", "Begemot"])
 
     def update_cats_list(self):
-        # при удалении питомца он также исчезает из списка
         pass
 
-    # clearLayout и delete_last_fragment нужны для удаления предыдущего layout с экрана
-    # layout удаляется когда выбрана другая опция
     def clearLayout(self, layout):
         if layout != None:
             while layout.count():
@@ -381,7 +371,6 @@ class MyPetsWindow(QWidget):
         self.setLayout(v_box_main)
 
     def show_pet_info(self):
-        # значения полей у питома должны помещаться  соответствубщие Qlabel
         v_box_main = self.layout()
         v_box_lbl = QVBoxLayout()
         v_box_info = QVBoxLayout()
@@ -417,7 +406,6 @@ class MyPetsWindow(QWidget):
         self.breed_text = QLabel(cat.cat_breed)
 
     def edit_pet_info(self):
-        # значения полей у питома должны помещаться  соответствубщие Qlabel
         v_box_main = self.layout()
         v_box = QVBoxLayout()
         h_box_name_edit = QHBoxLayout()
@@ -440,7 +428,6 @@ class MyPetsWindow(QWidget):
         h_box_breed_edit.addWidget(self.breed_lbl)
         h_box_breed_edit.addWidget(self.breed_text)
 
-        # по нажатию save изменения поля питомца в БД должны измениться
         self.save_btn = QPushButton("сохранить")
         self.save_btn.clicked.connect(self.change_data_cat)
 
@@ -492,7 +479,6 @@ class MyPetsWindow(QWidget):
         h_box_breed_edit.addWidget(self.breed_lbl)
         h_box_breed_edit.addWidget(self.breed_text)
 
-        # по нажатию save изменения поля питомца в БД должны измениться
         self.save_btn_add_pet = QPushButton("создать питомца")
         self.save_btn_add_pet.clicked.connect(self.add_pet)
         h_box_footer.addStretch()
@@ -526,7 +512,6 @@ class MyPetsWindow(QWidget):
             self.close()
 
     def delete_pet(self):
-        # значения полей у питома должны помещаться  соответствубщие Qlabel
         v_box_main = self.layout()
         v_box_lbl = QVBoxLayout()
         v_box_info = QVBoxLayout()
@@ -641,17 +626,14 @@ class BuyMedWindow(QWidget):
         pass
 
     def med_chosed(self, text):
-        # значения title,description и cost должны браться из БД и помещаться в нужные поля
         self.med_title_res.setText(text)
         self.med_med_description_res.setText("уникальное лекарство, еще бы кто-то знал что оно делает")
         self.med_cost_res.setText("999.0")
 
     def buy(self):
-        # понадобится еще таблица для заказов. она уже создана
         self.close()
 
     def get_meds_list(self):
-        # meds_list должен заполняться лекартствами из БД
         self.meds_list.addItems(["Фармакс", "Агроветзащита", "Астрафрм", "Талисмед", "Novartis"])
 
     def fill_layout(self, layout, items):

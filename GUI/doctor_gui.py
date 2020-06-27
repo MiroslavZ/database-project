@@ -1,84 +1,14 @@
-from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import *
-import datetime
 import copy
 from validate_email import validate_email
 
 import client
 from GUI.HelperMethods import *
-import gui_main
 
 from PyQt5.QtCore import Qt, QDate
-import sys
 
 from Petclinic.DoctorClass import DoctorClass
 
-
-# class DocWindow(QWidget):
-#     doctor = None
-#
-#     def __init__(self, doctor: DoctorClass):
-#         super().__init__()
-#         self.doctor = doctor
-#         self.init_ui()
-#
-#     def init_ui(self):
-#         self.setGeometry(0, 0, 640, 480)
-#         self.center()
-#         self.acc_button = QPushButton("ИМЯ ПОЛЬЗОВАТЕЛЯ")
-#         self.add_doc_button = QPushButton("ДОБАВИТЬ ДОКТОРА/ИЗМЕНИТЬ СТАТУС")
-#         self.change_data_button = QPushButton("ИЗМЕНИТЬ ДАННЫЕ")
-#         self.change_work_time_button = QPushButton("ЗАДАТЬ РАБОЧЕЕ ВРЕМЯ")
-#         self.change_med_button = QPushButton("ДОБАВИТЬ/ИЗМЕНИТЬ ЛЕКАРСТВО")
-#         self.show_checkups_button = QPushButton("СПИСОК ОСМОТРОВ")
-#         self.acc_button.clicked.connect(self.exit_from_acc)
-#
-#         v_box_left = QVBoxLayout()
-#         v_box_left.addWidget(self.add_doc_button)
-#         v_box_left.addWidget(self.change_data_button)
-#         v_box_left.addWidget(self.change_work_time_button)
-#         v_box_left.addWidget(self.change_med_button)
-#         v_box_left.addWidget(self.show_checkups_button)
-#         v_box_left.addStretch()
-#
-#         v_box_center = QVBoxLayout()
-#
-#         v_box_right = QVBoxLayout()
-#         v_box_right.addWidget(self.acc_button)
-#         v_box_right.addStretch()
-#
-#         h_box_main = QHBoxLayout()
-#         h_box_main.addLayout(v_box_left)
-#         h_box_main.addStretch()
-#         h_box_main.addLayout(v_box_center)
-#         h_box_main.addStretch()
-#         h_box_main.addLayout(v_box_right)
-#
-#         self.setLayout(h_box_main)
-#         self.setWindowTitle("Petclinic")
-#         self.show()
-#
-#     def closeEvent(self, event):
-#         reply = QMessageBox.question(self, 'quit', "Are you sure to quit?",
-#                                      QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
-#         if reply == QMessageBox.Yes:
-#             event.accept()
-#         else:
-#             event.ignore()
-#
-#     def goToNextWidget(self):
-#         pass
-#
-#     def exit_from_acc(self):
-#         self.new_window = gui_main.LoginWindow()
-#         self.close()
-#
-#     def center(self):
-#         qr = self.frameGeometry()
-#         cp = QDesktopWidget().availableGeometry().center()
-#         qr.moveCenter(cp)
-#         self.move(qr.topLeft())
-#
 
 class DocWindow(QWidget):
     doctor = None
@@ -104,7 +34,7 @@ class DocWindow(QWidget):
         self.add_doc_button.clicked.connect(self.goToEditDoctorsWindow)
         self.add_client_button.clicked.connect(self.goToEditClientsWindow)
         self.change_work_time_button.clicked.connect(self.goToEditWorktime)
-        self.show_checkups_button.clicked.connect(self.goToMyCheckups)
+        self.show_checkups_button.clicked.connect(self.goToAppointmentWindow)
 
         v_box_left = QVBoxLayout()
         v_box_left.addWidget(self.add_doc_button)
@@ -144,7 +74,6 @@ class DocWindow(QWidget):
         pass
 
     def exit_from_acc(self):
-        # self.new_window = LoginWindow()
         self.close()
 
     def center(self):
@@ -160,8 +89,6 @@ class DocWindow(QWidget):
         self.new_window = EditMedicationWindow()
 
     def goToEditDoctorsWindow(self):
-        # изменять данные докторов и добалять новых может только админ!
-        # у доктора есть поле is chief
         self.new_window = EditDoctorsWindow(self.doctor)
 
     def goToEditClientsWindow(self):
@@ -170,13 +97,11 @@ class DocWindow(QWidget):
     def goToEditWorktime(self):
         self.new_window = EditMyWorkTimeWindow()
 
-    def goToMyCheckups(self):
+    def goToAppointmentWindow(self):
         self.new_window = MyAppointmentsWindow()
 
 
-# доктор может изменить свои данные, например контактный телефон
 class UpdateMyDataWindow(QWidget):
-    # поля-флаги для проерки было ли изменено что либо
     surnameIsChanged = False
     nameIsChanged = False
     phoneIsChanged = False
@@ -259,8 +184,6 @@ class UpdateMyDataWindow(QWidget):
         self.actual_phone = QLabel(self.doctor.phone)
         self.actual_email = QLabel(self.doctor.email)
         self.actual_password = QLabel("********")
-        # при вызове метода данные пользователя должны поместится
-        # в соответсятвующие поля вместо "ПУСТО"
         self.update_actual_data()
 
         self.cancel_button = QPushButton("ОТМЕНА")
@@ -313,7 +236,6 @@ class UpdateMyDataWindow(QWidget):
         self.move(qr.topLeft())
 
     def save_changes(self):
-        # перед закрытием окна данные которые пользователь обновил должны обновиться в БД
         fio = self.doctor.fio.split()
 
         surname = self.new_surname.text()
@@ -359,36 +281,22 @@ class UpdateMyDataWindow(QWidget):
     def return_to_doc_window(self):
         self.close()
 
-    # набор методов изменяющих поля на экране
     def email_changed(self, text):
-        # pattern = compile('(^|\s)[-a-z0-9_.]+@([-a-z0-9]+\.)+[a-z]{2,6}(\s|$)')
-        # is_valid = pattern.match(text)
-        # if is_valid:
         if check_correct_email(text):
             self.actual_email.setText(text)
             self.emailIsChanged = True
 
     def name_changed(self, text):
-        # if len(text)>1:
-        #     match1 = re.match("^[АБВГДЕЁЖЗИКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ]*$", text[0])
-        #     match2 = re.match("^[абвгдеёжзиклмнопрстуфхцчшщъыьэюя]*$", text[1:])
-        #     if match1 is not None and match2 is not None:
         if check_correct_name(text):
             self.actual_surname.setText(text)
             self.nameIsChanged = True
 
     def surname_changed(self, text):
-        # if len(text)>1:
-        #     match1 = re.match("^[АБВГДЕЁЖЗИКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ]*$", text[0])
-        #     match2 = re.match("^[абвгдеёжзиклмнопрстуфхцчшщъыьэюя]*$", text[1:])
-        #     if match1 is not None and match2 is not None:
         if check_correct_name(text):
             self.actual_surname.setText(text)
             self.surnameIsChanged = True
 
     def phone_changed(self, text):
-        # match = re.match("^[0123456789]*$", text)
-        # if match is not None and len(text)==11:
         if check_correct_phone(text):
             self.actual_phone.setText(text)
             self.passwordIsChanged = True
@@ -397,9 +305,6 @@ class UpdateMyDataWindow(QWidget):
         if len(text) > 0:
             self.actual_password.setText(text)
 
-    # при вызове метода данные пользователя должны поместится
-    # в соответсятвующие поля вместо "ПУСТО"
-    # в классе есть поля-флаги для проерки было ли изменено что либо
     def update_actual_data(self):
         pass
 
@@ -434,7 +339,6 @@ class EditMedicationWindow(QWidget):
         self.meds_list = QComboBox(self)
         self.fill_meds_list()
         self.meds_list.addItems(self.get_titles_meds())
-        # self.meds_list.activated[str].connect(self.med_chosed)
 
         self.title_text = QLabel("Название:")
         self.title = QLineEdit()
@@ -460,8 +364,6 @@ class EditMedicationWindow(QWidget):
         v_box_right.addWidget(self.description)
         v_box_right.addWidget(self.cost_text)
         v_box_right.addWidget(self.cost)
-        # h_box_buttons.addWidget(self.delete_button)
-        # h_box_buttons.addWidget(self.save_button)
         v_box_right.addStretch()
         v_box_right.addLayout(h_box_buttons)
 
@@ -486,9 +388,6 @@ class EditMedicationWindow(QWidget):
         self.move(qr.topLeft())
 
     def save_changes(self):
-        # сохранение измненений названия/описания/стоимости лекарства в бд
-        # название изменяемого лекарства в self.current_chosed_med
-        # обновление списка
         title = self.title.text()
         description = self.description.text()
         cost = self.cost.text()
@@ -506,20 +405,13 @@ class EditMedicationWindow(QWidget):
             client.change_medication(med_id, title, description, cost)
             QMessageBox.information(self, "Успешно", "Лекарство изменено", QMessageBox.Ok)
             self.close()
-        # index = self.medications.index(self.current_chosed_med)
-        # self.medications[index] = str(self.title.text())
-        # self.fill_meds_list()
 
     def delete_med(self):
-        # удаление лекарства
         client.delete_medication(self.med.id)
         QMessageBox.information(self, "Успешно", "Лекарство удалено", QMessageBox.Ok)
         self.close()
 
     def add_med(self):
-        # добавление нового лекарства в базу + обновление списка на экране
-        # self.title, self.description, self.cost
-        # список обновляется fill_meds_list
 
         title = self.title.text()
         description = self.description.text()
@@ -537,10 +429,6 @@ class EditMedicationWindow(QWidget):
             client.add_medication(title, description, float(cost))
             QMessageBox.information(self, "Успешно", "Лекарство добавлено", QMessageBox.Ok)
             self.close()
-        # if not self.medications.__contains__(str(self.title.text())):
-        #     self.medications.append(str(self.title.text()))
-        #     self.fill_meds_list()
-        # pass
 
     def is_float(self, line: str):
         try:
@@ -569,9 +457,6 @@ class EditMedicationWindow(QWidget):
                 self.button_pressed = True
 
         elif button.text() == "добавить новое лекарство":
-            # self.delete_buttons_fragment()
-            # if self.button_pressed_save:
-            #     self.delete_buttons_fragment()
             self.title.setText('')
             self.description.setText('')
             self.cost.setText('')
@@ -579,23 +464,14 @@ class EditMedicationWindow(QWidget):
             self.button_pressed = True
 
     def med_chosed(self, text):
-        # щелчок по эл-ту списка
-        # при выборе лекарства показать его поля,
-        # поместить их в self.title, self.description, self.cost
         self.current_chosed_med = copy.copy(text)
         self.title.setText(text)
         pass
 
-    # метод для заполнения списка лекарств (список состоит из названий)
-    # после удаления/добавления лекарста надо обновить список
     def fill_meds_list(self):
-        # это для примера
         self.meds_list.clear()
         self.meds_list.addItems(self.medications)
-        # self.meds_list.addItems(["Фармакс", "Агроветзащита", "Астрафрм","Талисмед", "Novartis"])
 
-    # clearLayout и delete_last_fragment нужны для удаления предыдущего layout с экрана
-    # layout удаляется когда выбрана другая опция
     def clearLayout(self, layout):
         if layout != None:
             while layout.count():
@@ -639,7 +515,6 @@ class EditMedicationWindow(QWidget):
         self.setLayout(h_box_main)
 
 
-# изменять данные докторов и добалять новых может только админ!
 class EditDoctorsWindow(QWidget):
     doctors = []
     doctor = None
@@ -673,7 +548,6 @@ class EditDoctorsWindow(QWidget):
         doctors_name = self.get_doctors_name()
 
         self.doctors_list.addItems(doctors_name)
-        # self.doctors_list.activated[str].connect(self.doctor_chosed)
         self.help = QLabel("")
 
         self.surname_title = QLabel("Фамилия:")
@@ -737,8 +611,6 @@ class EditDoctorsWindow(QWidget):
         self.move(qr.topLeft())
 
     def save_changes(self):
-        # изменили данные доктора и обноили их в БД
-        # и изменили его в списке(если фио стало другое)
         index = self.doctors.index(self.current_chosed_doctor)
         surname_new = str(self.surname.text())
         name_new = str(self.name.text())
@@ -753,20 +625,13 @@ class EditDoctorsWindow(QWidget):
             self.fill_docs_list()
 
     def delete_doctor(self):
-        # удаление доктора из БД
         fio = self.doctors_list.currentText()
         client.delete_doctor_by_fio(fio)
 
         QMessageBox.information(self, "Успешно ", "Доктор удален", QMessageBox.Ok)
         self.close()
-        # deleting_doc = str(self.surname.text()) + " " + str(self.name.text()) + " " + str(self.patronymic.text())
-        # if self.doctors.__contains__(deleting_doc):
-        #     self.doctors.remove(deleting_doc)
-        #     self.fill_docs_list()
 
     def add_new_doctor(self):
-        # добавление нового доктора в БД
-        # добаление его в список на экране
         surname = str(self.surname.text())
         name = str(self.name.text())
         patronymic = str(self.patronymic.text())
@@ -791,12 +656,6 @@ class EditDoctorsWindow(QWidget):
             client.add_doctor(fio, email, phone, password, 'work_time', True)
             QMessageBox.information(self, "Успешно", "Доктор добавлен", QMessageBox.Ok)
             self.close()
-
-        # if check_correct_name(surname) or check_correct_name(name) or check_correct_name(patronymic) \
-        #         or check_correct_phone(phone) or check_correct_email(email) or check_correct_password(password):
-        #     new_doc = str(surname + " " + name + " " + patronymic)
-        #     self.doctors.append(new_doc)
-        #     self.fill_docs_list()
 
     def return_to_doc_window(self):
         self.close()
@@ -845,13 +704,9 @@ class EditDoctorsWindow(QWidget):
         self.name.setText(array[1])
 
     def fill_docs_list(self):
-        # это для примера
         self.doctors_list.clear()
         self.doctors_list.addItems(self.doctors)
-        # self.doctors_list.addItems(["Иванов Иван Иваноич", "Иванов Неиван Иваноич", "Иванов Иван Неиваноич"])
 
-    # clearLayout и delete_last_fragment нужны для удаления предыдущего layout с экрана
-    # layout удаляется когда выбрана другая опция
     def clearLayout(self, layout):
         if layout != None:
             while layout.count():
@@ -936,11 +791,7 @@ class EditDoctorsWindow(QWidget):
             self.close()
 
 
-# по хорошему можно запретить обычному доктору изменять данные уже созданных клиентов
-# но не факт что это так важно
 class EditClientsWindow(QWidget):
-    # clients = []
-    # current_chosed_client = ""
 
     def __init__(self):
         super().__init__()
@@ -969,8 +820,6 @@ class EditClientsWindow(QWidget):
         clients_names = self.get_clients_names()
 
         self.clients_list.addItems(clients_names)
-        # self.fill_clients_list()
-        # self.clients_list.activated[str].connect(self.client_chosed)
         self.help = QLabel("")
 
         self.surname_title = QLabel("Фамилия:")
@@ -1054,7 +903,8 @@ class EditClientsWindow(QWidget):
                 email.__len__() > 255 or password.__len__() > 255:
             QMessageBox.critical(self, "Ошибка", "Превышена допустимая длина полей или поля", QMessageBox.Ok)
         elif not phone.isdigit():
-            QMessageBox.critical(self, "Ошибка", "В поле телефон можно вводить только цифры без разделителей", QMessageBox.Ok)
+            QMessageBox.critical(self, "Ошибка", "В поле телефон можно вводить только цифры без разделителей",
+                                 QMessageBox.Ok)
         elif not validate_email(email) or ('.' not in email):
             QMessageBox.critical(self, "Ошибка ", "Неверный формат email", QMessageBox.Ok)
         else:
@@ -1064,36 +914,12 @@ class EditClientsWindow(QWidget):
             QMessageBox.information(self, "Успешно ", "Информация изменена", QMessageBox.Ok)
             self.close()
 
-        # изменили данные user-a и обноили их в БД
-        # и изменили его в списке(если фио стало другое)
-        # index = self.clients.index(self.current_chosed_client)
-        # surname_new = str(self.surname.text())
-        # name_new = str(self.name.text())
-        # patronymic_new = str(self.patronymic.text())
-        # fio = f'{surname_new} {name_new} {patronymic_new}'
-        # phone_new = str(self.phone.text())
-        # email_new = str(self.email.text())
-        # password_new = str(self.password.text())
-        #
-        # client.get_doctor_by_fio()
-        # client.add_doctor(fio, email_new, phone_new, password_new, 'work_time', True)
-        # # if check_correct_name(surname_new) or check_correct_name(name_new) or check_correct_name(patronymic_new) \
-        # #         or check_correct_phone(phone_new) or check_correct_email(email_new) or check_correct_password(
-        # #     password_new):
-        # #     self.clients[index] = surname_new + " " + name_new + " " + patronymic_new
-        #     self.fill_clients_list()
-
     def delete_client(self):
         this_client = client.get_client_by_fio(
             self.clients_list.currentText())
         client.delete_client(this_client.id)
         QMessageBox.information(self, "Успешно ", "Пользователь удален", QMessageBox.Ok)
         self.close()
-        # удаление user-a из БД
-        # deleting_usr = str(self.surname.text()) + " " + str(self.name.text()) + " " + str(self.patronymic.text())
-        # if self.clients.__contains__(deleting_usr):
-        #     self.clients.remove(deleting_usr)
-        #     self.fill_docs_list()
 
     def add_new_client(self):
 
@@ -1123,21 +949,6 @@ class EditClientsWindow(QWidget):
 
             QMessageBox.information(self, "Успешно ", "Пользователь добавлен", QMessageBox.Ok)
             self.close()
-        # добавление нового user-a в БД
-        # добаление его в список на экране
-        # surname = str(self.surname.text())
-        # name = str(self.name.text())
-        # patronymic = str(self.patronymic.text())
-        # phone = str(self.phone.text())
-        # email = str(self.email.text())
-        # password = str(self.password.text())
-        # print(str(surname + " " + name + " " + patronymic))  # это для отладки
-        # # if not (surname=="" or name==""or patronymic==""or phone==""or email==""or password==""):
-        # if check_correct_name(surname) or check_correct_name(name) or check_correct_name(patronymic) \
-        #         or check_correct_phone(phone) or check_correct_email(email) or check_correct_password(password):
-        #     new_client = str(surname + " " + name + " " + patronymic)
-        #     self.clients.append(new_client)
-        #     self.fill_clients_list()
 
     def return_to_doc_window(self):
         self.close()
@@ -1175,19 +986,7 @@ class EditClientsWindow(QWidget):
 
     def client_chosed(self, text):
         pass
-        # array = text.split(" ")
-        # self.current_chosed_client = copy.copy(text)
-        # self.surname.setText(array[0])
-        # self.name.setText(array[1])
 
-    # def fill_clients_list(self):
-    #     # заполнение списка фио пользоателей
-    #     # это для примера
-    #     self.clients_list.clear()
-    #     self.clients_list.addItems(self.clients)
-
-    # clearLayout и delete_last_fragment нужны для удаления предыдущего layout с экрана
-    # layout удаляется когда выбрана другая опция
     def clearLayout(self, layout):
         if layout != None:
             while layout.count():
@@ -1234,8 +1033,6 @@ class EditClientsWindow(QWidget):
 class EditMyWorkTimeWindow(QWidget):
     one_day_is_changing = True
     current_selected_day = "Понедельник"
-    # словарь день <-> пара время начала/время окончания
-    # в бд у нас blob поле для этого словаря
     work_times = {}
 
     def __init__(self):
@@ -1354,7 +1151,6 @@ class EditMyWorkTimeWindow(QWidget):
         self.move(qr.topLeft())
 
     def day_chosed(self, text):
-        # при выборе дня время начала,конца должно подгружаться в нужные поля
         self.current_selected_day = text
         pass
 
@@ -1376,19 +1172,15 @@ class EditMyWorkTimeWindow(QWidget):
             self.save_changes_in_database()
 
     def save_changes_in_database(self):
-        # сохранение слоаря days_list в поле worktime у доктора у БД
         pass
 
     def option_chosed(self, button):
-        # применение настройки времени для выбранного дня
-        # или для все дней сразу (чтоб быстрее настраивать)
         if button.text() == "к выбранному дню":
             self.one_day_is_changing = True
         else:
             self.one_day_is_changing = False
 
     def fill_days_list(self):
-        # по идее days_list должен хранить копию рабоих часов из поял из базы
         temp_list = ["Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота", "Воскресенье"]
         self.days_list.addItems(temp_list)
         for i in temp_list:
@@ -1494,11 +1286,11 @@ class EditMyWorkTimeWindow(QWidget):
 
 
 class MyAppointmentsWindow(QWidget):
-    change_state_dialog=None
+    change_state_dialog = None
     change_weight_dialog = None
     change_need_med_dialog = None
-    selected_row=0
-    selected_column=0
+    selected_row = 0
+    selected_column = 0
 
     def __init__(self):
         super().__init__()
@@ -1507,39 +1299,28 @@ class MyAppointmentsWindow(QWidget):
     def init_ui(self):
         self.setGeometry(0, 0, 600, 400)
         self.center()
-        v_box_main=QVBoxLayout()
-        h_box_header=QHBoxLayout()
-        h_box_footer=QHBoxLayout()
+        v_box_main = QVBoxLayout()
+        h_box_header = QHBoxLayout()
+        h_box_footer = QHBoxLayout()
 
-        self.change_state_dialog=ChangeWeightOrStateDialog(self)
-        self.change_weight_dialog=ChangeWeightOrStateDialog(self)
-        self.change_need_med_dialog=ChangeNeededMedicationDialog(self)
+        self.change_state_dialog = ChangeWeightOrStateDialog(self)
+        self.change_weight_dialog = ChangeWeightOrStateDialog(self)
+        self.change_need_med_dialog = ChangeNeededMedicationDialog(self)
 
-        self.search_title=QLabel("поиск осмотров:")
-        self.search_request=QLineEdit()
-        self.search_btn=QPushButton("ПОИСК")
-        self.search_btn.clicked.connect(self.search_appointments)
-        h_box_header.addWidget(self.search_title)
-        h_box_header.addWidget(self.search_request)
-        h_box_header.addWidget(self.search_btn)
         h_box_header.addStretch()
 
-        self.appointments_table=QTableWidget()
-        all_ap=self.get_appointments_table()
+        self.appointments_table = QTableWidget()
+        all_ap = self.get_appointments_table()
         self.fill_appointments_table(all_ap)
-        self.appointments_table.setHorizontalHeaderLabels(["дата/время","питомец","состояние(результаты осмотра)"\
-                                                              ,"вес питомца","необходимые лекарства"])
+        self.appointments_table.setHorizontalHeaderLabels(
+            ["дата/время", "питомец", "состояние(результаты осмотра)", "вес питомца", "необходимые лекарства"])
         self.appointments_table.cellClicked.connect(self.cellIsClicked)
 
-
-
-
-        v_box_main.addLayout(h_box_header)
         v_box_main.addWidget(self.appointments_table)
         v_box_main.addLayout(h_box_footer)
 
         self.setLayout(v_box_main)
-        self.setWindowTitle("мои осмотры")
+        self.setWindowTitle("Мои осмотры")
         self.show()
 
     def center(self):
@@ -1549,54 +1330,45 @@ class MyAppointmentsWindow(QWidget):
         self.move(qr.topLeft())
 
     def get_appointments_table(self):
-        #получаем все осмотры которые есть у ЭТОГО доктора чтобы передать их fill_appointments_table
-        #это для примера
-        return [["some time1","DOC NOT NEEDED","Cat1","Cat1 is health","5.1 kg","no"],["some time2","DOC NOT NEEDED","Cat2","Cat2 isn't health","3.5 kg","yes"]]
+        return [["15.08.2020", "DOC NOT NEEDED", "Tom", "Tom is health", "5.1 kg", "no"],
+                ["24.09.2020", "DOC NOT NEEDED", "Leopold", "Leopold isn't health", "3.5 kg", "yes"]]
 
-    def fill_appointments_table(self,all_ap):
-        #заполняем таблицу полученными осмотрами
-        #это для примера
-        appointments_count=len(all_ap)
+    def fill_appointments_table(self, all_ap):
+        appointments_count = len(all_ap)
         self.appointments_table.setRowCount(appointments_count)
         self.appointments_table.setColumnCount(5)
         i = 0
-        flag=True
+        flag = True
         for appointment in all_ap:
-            for j in range(0,len(appointment)):
-                #мы получаем строки из базы включая фио доктора
-                #эл-т с индексом 1 - фио доктора, оно нам не надо(и так понятно какой доктор)
-                if not j==1:
+            for j in range(0, len(appointment)):
+                if not j == 1:
                     cellinfo = QTableWidgetItem(appointment[j])
                 else:
-                    cellinfo = QTableWidgetItem(appointment[j+1])
+                    cellinfo = QTableWidgetItem(appointment[j + 1])
                 cellinfo.setFlags(Qt.ItemIsEnabled | Qt.ItemIsSelectable)
-                if j>1:
+                if j > 1:
                     self.appointments_table.setItem(i, j - 1, cellinfo)
                 else:
                     self.appointments_table.setItem(i, j, cellinfo)
-            i+=1
+            i += 1
 
-    # доктор может изменить state(результаты осмотра), cat weight(типо кота взвешивали) и need med(лекарства если надо)
-    def cellIsClicked(self,row,column):
-        self.selected_row=row
-        self.selected_column=column
-        if column==2:
+    def cellIsClicked(self, row, column):
+        self.selected_row = row
+        self.selected_column = column
+        if column == 2:
             self.change_state_dialog.show()
-        if column==3:
+        if column == 3:
             self.change_weight_dialog.show()
-        if column==4:
+        if column == 4:
             self.change_need_med_dialog.show()
 
     def search_appointments(self):
-        request=str(self.search_request.text())
-        #тут мы ищем осмотры удолетворяющие поисковой фразе
-        #чистим таблицу и заполняем заново
-        #получаем се осмотры доктора и фильтруем их...
+        request = str(self.search_request.text())
         self.appointments_table.clearContents()
         print(request)
-        result=[]
-        #это для примера
-        all_ap=[["some time1","DOC NOT NEEDED","Cat1","Cat1 is health","5.1 kg","no"],["some time2","DOC NOT NEEDED","Cat2","Cat2 isn't health","3.5 kg","yes"]]
+        result = []
+        all_ap = [["some time1", "DOC NOT NEEDED", "Cat1", "Cat1 is health", "5.1 kg", "no"],
+                  ["some time2", "DOC NOT NEEDED", "Cat2", "Cat2 isn't health", "3.5 kg", "yes"]]
         for appointment in all_ap:
             for cell in appointment:
                 if cell.__contains__(request):
@@ -1605,22 +1377,20 @@ class MyAppointmentsWindow(QWidget):
         self.fill_appointments_table(result)
 
 
-
-#диалоговое окно изменения результатов осмотра и веса питомца
 class ChangeWeightOrStateDialog(QDialog):
     def __init__(self, root):
         super().__init__(root)
         self.main = root
-        self.help_title=QLabel("введите резутьтаты осмотра:")
-        self.results=QLineEdit()
-        self.cancel_btn=QPushButton("отмена")
+        self.help_title = QLabel("введите резутьтаты осмотра:")
+        self.results = QLineEdit()
+        self.cancel_btn = QPushButton("отмена")
         self.cancel_btn.clicked.connect(self.cancel)
-        self.save_btn=QPushButton("сохранить")
+        self.save_btn = QPushButton("сохранить")
         self.save_btn.clicked.connect(self.save_changes)
-        v_box_main=QVBoxLayout()
+        v_box_main = QVBoxLayout()
         v_box_main.addWidget(self.help_title)
         v_box_main.addWidget(self.results)
-        h_box_buttons=QHBoxLayout()
+        h_box_buttons = QHBoxLayout()
         h_box_buttons.addWidget(self.cancel_btn)
         h_box_buttons.addWidget(self.save_btn)
         v_box_main.addLayout(h_box_buttons)
@@ -1630,30 +1400,26 @@ class ChangeWeightOrStateDialog(QDialog):
         self.close()
 
     def save_changes(self):
-        #сохраняем изменения в таблицу на экране и в бд
-        #определить что мы сохраняем (state/weight/need_med) можно по self.main.selected_row,self.main.selected_column
-        #поля времени и имени питомца не изменяемы, по ним можно найти осмотр в бд и изменить поля
-        cellinfo=QTableWidgetItem(str(self.results.text()))
-        self.main.appointments_table.setItem(self.main.selected_row,self.main.selected_column,cellinfo)
+        cellinfo = QTableWidgetItem(str(self.results.text()))
+        self.main.appointments_table.setItem(self.main.selected_row, self.main.selected_column, cellinfo)
         self.close()
 
 
-#диалоговое окно назначения лекарства питомцу(если он болен)
 class ChangeNeededMedicationDialog(QDialog):
     def __init__(self, root):
         super().__init__(root)
         self.main = root
-        self.help_title=QLabel("выберите необходимое лекарство из списка:")
-        self.results=QComboBox(self)
+        self.help_title = QLabel("выберите необходимое лекарство из списка:")
+        self.results = QComboBox(self)
         self.fill_meds_list()
-        self.cancel_btn=QPushButton("отмена")
+        self.cancel_btn = QPushButton("отмена")
         self.cancel_btn.clicked.connect(self.cancel)
-        self.save_btn=QPushButton("сохранить")
+        self.save_btn = QPushButton("сохранить")
         self.save_btn.clicked.connect(self.save_changes)
-        v_box_main=QVBoxLayout()
+        v_box_main = QVBoxLayout()
         v_box_main.addWidget(self.help_title)
         v_box_main.addWidget(self.results)
-        h_box_buttons=QHBoxLayout()
+        h_box_buttons = QHBoxLayout()
         h_box_buttons.addWidget(self.cancel_btn)
         h_box_buttons.addWidget(self.save_btn)
         v_box_main.addLayout(h_box_buttons)
@@ -1663,16 +1429,13 @@ class ChangeNeededMedicationDialog(QDialog):
         self.close()
 
     def save_changes(self):
-        #сохраняем изменения в таблицу на экране и в бд
-        #определить что мы сохраняем (state/weight/need_med) можно по self.main.selected_row,self.main.selected_column
-        #поля времени и имени питомца не изменяемы, по ним можно найти осмотр в бд и изменить поля
-        cellinfo=QTableWidgetItem(str(self.results.currentText()))
-        self.main.appointments_table.setItem(self.main.selected_row,self.main.selected_column,cellinfo)
+        cellinfo = QTableWidgetItem(str(self.results.currentText()))
+        self.main.appointments_table.setItem(self.main.selected_row, self.main.selected_column, cellinfo)
         self.close()
 
     def fill_meds_list(self):
-        #список назаний лекарств берется из бд
-
-        #это для примера
-        meds=["Лекарство1","Лекарсто2"]
+        meds = [""]
+        meds_dic = client.get_all_medications()
+        for key in meds_dic:
+            meds.append(meds_dic[key].title)
         self.results.addItems(meds)

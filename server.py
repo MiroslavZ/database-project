@@ -164,7 +164,6 @@ class CustomHandler(server.SimpleHTTPRequestHandler):
         return bytes(line_e).decode('utf-8')
 
 
-# В ковычках пишешь свой ip
 server_address = ('192.168.1.128', 80)
 httpd = server.HTTPServer(server_address, CustomHandler)
 print('Start server')
